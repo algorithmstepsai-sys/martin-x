@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Background & Foreground - black-800 */
+    --color-background: #000000; /* black */
+    --color-foreground: #FFFFFF; /* white */
+    
+    /* Card Colors - stone-900 */
+    --color-card: #0A0A0A; /* near-black */
+    --color-card-foreground: #FFFFFF; /* white */
+    
+    /* Popover Colors - stone-800 */
+    --color-popover: #1C1917; /* stone-900 */
+    --color-popover-foreground: #FFFFFF; /* white */
+    
+    /* Primary (Dark Burgundy) - burgundy-800 */
+    --color-primary: #800020; /* dark burgundy */
+    --color-primary-foreground: #FFFFFF; /* white */
+    
+    /* Secondary (Dark Gold) - gold-700 */
+    --color-secondary: #8B6914; /* dark gold */
+    --color-secondary-foreground: #FFFFFF; /* white */
+    
+    /* Muted Colors - stone-400 */
+    --color-muted: #292524; /* stone-800 */
+    --color-muted-foreground: #A8A29E; /* stone-400 */
+    
+    /* Accent (Lighter Gold) - gold-400 */
+    --color-accent: #D4AF37; /* lighter gold */
+    --color-accent-foreground: #000000; /* black */
+    
+    /* Destructive/Error - red-600 */
+    --color-destructive: #DC2626; /* red-600 */
+    --color-destructive-foreground: #FFFFFF; /* white */
+    
+    /* Success - green-600 */
+    --color-success: #16A34A; /* green-600 */
+    --color-success-foreground: #FFFFFF; /* white */
+    
+    /* Warning - amber-500 */
+    --color-warning: #F59E0B; /* amber-500 */
+    --color-warning-foreground: #000000; /* black */
+    
+    /* Error (Same as Destructive) - red-600 */
+    --color-error: #DC2626; /* red-600 */
+    --color-error-foreground: #FFFFFF; /* white */
+    
+    /* Border & Input - stone-700 */
+    --color-border: #44403C; /* stone-700 */
+    --color-input: #44403C; /* stone-700 */
+    
+    /* Ring (Focus) - gold-600 */
+    --color-ring: #CA8A04; /* gold-600 */
+    
+    /* Border Radius */
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #000000; /* black */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #800020; /* dark burgundy */
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8B6914; /* dark gold */
+  }
+}
+
+@layer components {
+  /* Glassmorphism Effect */
+  .glass-panel {
+    background: rgba(138, 105, 20, 0.05); /* dark gold with low opacity */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(138, 105, 20, 0.2); /* dark gold border */
+  }
+  
+  /* Card Shadow System */
+  .card-shadow {
+    box-shadow: 0 4px 20px -2px rgba(128, 0, 32, 0.15); /* dark burgundy shadow */
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .card-shadow:hover {
+    box-shadow: 0 20px 40px -4px rgba(128, 0, 32, 0.25); /* darker burgundy shadow on hover */
+    transform: translateY(-4px);
+  }
+  
+  /* Dark Gold Glow Effect */
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(139, 105, 20, 0.4); /* dark gold glow */
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .glow-gold:hover {
+    box-shadow: 0 0 30px rgba(139, 105, 20, 0.6); /* stronger dark gold glow on hover */
+  }
+  
+  /* Button Base Styles */
+  .btn-primary {
+    @apply bg-secondary text-secondary-foreground rounded-full px-8 py-4 font-medium tracking-wide transition-all duration-300 glow-gold;
+  }
+  
+  .btn-primary:hover {
+    @apply bg-accent scale-105;
+  }
+  
+  .btn-secondary {
+    @apply bg-primary text-primary-foreground rounded-full px-8 py-4 font-medium tracking-wide transition-all duration-300;
+  }
+  
+  .btn-secondary:hover {
+    @apply bg-opacity-90 scale-105;
+  }
+  
+  /* Accordion Styles */
+  .accordion-header {
+    @apply bg-primary text-primary-foreground px-6 py-4 rounded-xl cursor-pointer transition-all duration-300;
+  }
+  
+  .accordion-header:hover {
+    @apply bg-opacity-90;
+  }
+  
+  .accordion-content {
+    @apply bg-card text-card-foreground px-6 py-4 rounded-b-xl;
+  }
+  
+  /* Warning Box */
+  .warning-box {
+    @apply border-2 border-primary bg-card p-6 rounded-2xl;
+  }
+}
+
+@layer utilities {
+  /* Scroll Reveal Animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Pulse Animation for CTAs */
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  
+  /* Enhanced 3D logo effect */
+  @keyframes logo-3d-float {
+    0%, 100% {
+      transform: translateY(0px) rotateX(0deg);
+    }
+    50% {
+      transform: translateY(-2px) rotateX(2deg);
+    }
+  }
+  
+  .logo-3d-effect {
+    animation: logo-3d-float 4s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+  
+  /* Slide In Animation */
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-in {
+    animation: slide-in-right 0.5s ease-out;
+  }
+  
+  /* Fade In Animation */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out;
+  }
+  
+  /* Animation Delays */
+  .animation-delay-100 {
+    animation-delay: 0.1s;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+  
+  .animation-delay-300 {
+    animation-delay: 0.3s;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+  
+  .animation-delay-500 {
+    animation-delay: 0.5s;
+  }
+  
+  /* Zoom In Animation */
+  @keyframes zoom-in {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .animate-zoom-in {
+    animation: zoom-in 0.4s ease-out;
+  }
+}
+
+/* Typography Utilities */
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #8B6914 0%, #D4AF37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Selection Styling */
+::selection {
+  background-color: #8B6914; /* dark gold */
+  color: #FFFFFF; /* white */
+}
+
+::-moz-selection {
+  background-color: #8B6914; /* dark gold */
+  color: #FFFFFF; /* white */
+}
