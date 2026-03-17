@@ -265,9 +265,119 @@
       opacity: 1;
     }
   }
-  
+
   .animate-zoom-in {
     animation: zoom-in 0.4s ease-out;
+  }
+
+  /* Shimmer sweep effect */
+  @keyframes shimmer-sweep {
+    0% {
+      transform: translateX(-100%) skewX(-15deg);
+    }
+    100% {
+      transform: translateX(200%) skewX(-15deg);
+    }
+  }
+
+  .animate-shimmer-sweep {
+    animation: shimmer-sweep 3s ease-in-out infinite;
+  }
+
+  /* Rotating border gradient */
+  @keyframes border-rotate {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-border-rotate {
+    background-size: 300% 300%;
+    animation: border-rotate 4s linear infinite;
+  }
+
+  /* Scale-in with bounce */
+  @keyframes scale-in-bounce {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-scale-in-bounce {
+    animation: scale-in-bounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Floating vertical drift */
+  @keyframes float-drift {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  .animate-float-drift {
+    animation: float-drift 3s ease-in-out infinite;
+  }
+
+  /* Counting number reveal */
+  @keyframes number-reveal {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-number-reveal {
+    animation: number-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Sparkle twinkle */
+  @keyframes sparkle {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1) rotate(180deg);
+    }
+  }
+
+  /* Slide up fade */
+  @keyframes slide-up-fade {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-up-fade {
+    animation: slide-up-fade 0.6s ease-out forwards;
   }
 }
 
