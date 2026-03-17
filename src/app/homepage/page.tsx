@@ -9,6 +9,20 @@ import ImportantWarning from'./components/ImportantWarning';
 import FinalCTA from'./components/FinalCTA';
 import FAQSection from'./components/FAQSection';
 
+// Generate floating logo positions
+const generateLogoParticles = (count: number) => {
+  return Array.from({ length: count }, (_, i) => ({
+    id: `logo-${i}`,
+    size: 20 + Math.random() * 30, // 20px to 50px
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    duration: 50 + Math.random() * 40,
+    delay: Math.random() * -30,
+    opacity: 0.04 + Math.random() * 0.06, // very subtle: 0.04 to 0.10
+    rotation: Math.random() * 360,
+  }));
+};
+
 // Generate particle data once to avoid hydration mismatch
 const generateParticles = (count: number, layer: string) => {
   return Array.from({ length: count }, (_, i) => ({
@@ -54,6 +68,7 @@ export default function Homepage() {
     layer1: ReturnType<typeof generateParticles>;
     layer2: ReturnType<typeof generateParticlesLayer2>;
     layer3: ReturnType<typeof generateParticlesLayer3>;
+    logos: ReturnType<typeof generateLogoParticles>;
   } | null>(null);
 
   useEffect(() => {
@@ -61,7 +76,8 @@ export default function Homepage() {
     setParticles({
       layer1: generateParticles(25, 'wave1'),
       layer2: generateParticlesLayer2(20, 'wave2'),
-      layer3: generateParticlesLayer3(15, 'depth')
+      layer3: generateParticlesLayer3(15, 'depth'),
+      logos: generateLogoParticles(12)
     });
 
     const reveals = document.querySelectorAll('.reveal')
@@ -165,6 +181,34 @@ export default function Homepage() {
           </>
         )}
 
+        {/* Floating Logo Background Layer */}
+        {particles && (
+          <div className="absolute inset-0">
+            {particles.logos.map((logo) => (
+              <img
+                key={logo.id}
+                src="/assets/images/logo2_17_181150-1771344765358.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute"
+                style={{
+                  width: `${logo.size}px`,
+                  height: `${logo.size}px`,
+                  left: `${logo.left}%`,
+                  top: `${logo.top}%`,
+                  opacity: logo.opacity,
+                  animation: `floatingLogo ${logo.duration}s infinite ease-in-out`,
+                  animationDelay: `${logo.delay}s`,
+                  filter: 'drop-shadow(0 0 6px rgba(212, 175, 55, 0.3))',
+                  transform: `rotate(${logo.rotation}deg)`,
+                  willChange: 'transform, opacity',
+                  objectFit: 'contain',
+                }}
+              />
+            ))}
+          </div>
+        )}
+
         {/* Subtle Fade Transitions Between Sections */}
         <div 
           className="absolute left-0 right-0 h-32 pointer-events-none"
@@ -259,10 +303,43 @@ export default function Homepage() {
         /* GPU Acceleration for Smooth 60fps */
         @media (prefers-reduced-motion: no-preference) {
           [style*="galaxyWave"],
-          [style*="galaxyDepth"] {
+          [style*="galaxyDepth"],
+          [style*="floatingLogo"] {
             transform: translateZ(0);
             backface-visibility: hidden;
             perspective: 1000px;
+          }
+        }
+
+        /* Floating Logo Animation - Gentle Drift & Rotate */
+        @keyframes floatingLogo {
+          0% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+            opacity: 0.04;
+          }
+          15% {
+            transform: translate(30px, -20px) rotate(15deg) scale(1.05);
+            opacity: 0.08;
+          }
+          30% {
+            transform: translate(70px, 10px) rotate(-10deg) scale(0.95);
+            opacity: 0.06;
+          }
+          50% {
+            transform: translate(120px, -30px) rotate(20deg) scale(1.08);
+            opacity: 0.09;
+          }
+          70% {
+            transform: translate(80px, 20px) rotate(-5deg) scale(0.97);
+            opacity: 0.05;
+          }
+          85% {
+            transform: translate(40px, -10px) rotate(10deg) scale(1.03);
+            opacity: 0.07;
+          }
+          100% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+            opacity: 0.04;
           }
         }
 
@@ -295,6 +372,21 @@ export default function Homepage() {
             100% {
               transform: translate(200px, 150px) scale(0.8);
               opacity: 0.35;
+            }
+          }
+
+          @keyframes floatingLogo {
+            0% {
+              transform: translate(0, 0) rotate(0deg) scale(0.8);
+              opacity: 0.03;
+            }
+            50% {
+              transform: translate(60px, -15px) rotate(10deg) scale(0.9);
+              opacity: 0.06;
+            }
+            100% {
+              transform: translate(0, 0) rotate(0deg) scale(0.8);
+              opacity: 0.03;
             }
           }
         }
